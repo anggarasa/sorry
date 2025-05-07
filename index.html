@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maafin Aku Ya, Raisya ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFF5F7;
+        }
+
+        .heart {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .bounce-in {
+            animation: bounceIn 2s;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .falling-heart {
+            position: fixed;
+            color: #FD6584;
+            opacity: 0.7;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body x-data="app()">
+<!-- Falling Hearts Animation -->
+<template x-for="heart in fallingHearts" :key="heart.id">
+    <div class="falling-heart" :style="`left: ${heart.x}%; font-size: ${heart.size}px; animation-duration: ${heart.duration}s;`">❤️</div>
+</template>
+
+<div class="min-h-screen flex flex-col justify-center items-center p-5 relative overflow-hidden">
+    <!-- Header -->
+    <div class="text-center mb-8 relative z-10">
+        <h1 class="text-3xl md:text-5xl font-bold text-pink-500 mb-4 animate__animated animate__heartBeat">Raisya Mairatu 💕</h1>
+        <p class="text-lg md:text-xl text-pink-600 italic">"Maafin Anggara ya..."</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 relative z-10">
+        <!-- Card Header -->
+        <div class="bg-gradient-to-r from-pink-400 to-purple-500 p-4 text-white text-center">
+            <h2 class="text-2xl font-bold">Permintaan Maaf Spesial</h2>
+            <p class="text-sm opacity-80">Dari: Anggara Saputra, Untuk: Raisya Mairatu</p>
+        </div>
+
+        <!-- Card Content -->
+        <div class="p-6" x-data="{ showMessage: false, currentSlide: 0 }">
+            <!-- Initial Heart -->
+            <div x-show="!showMessage" class="text-center py-10">
+                <div class="heart text-8xl mb-6 cursor-pointer" @click="showMessage = true">❤️</div>
+                <p class="text-lg text-pink-600 font-medium">Klik hati untuk membuka surat</p>
+            </div>
+
+            <!-- Message Content -->
+            <div x-show="showMessage" x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="opacity-0 transform -translate-y-10" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                <!-- Carousel -->
+                <div class="relative">
+                    <!-- Slide 1 -->
+                    <div x-show="currentSlide === 0" class="text-center space-y-4">
+                        <div class="text-6xl mx-auto floating">❤️</div>
+                        <h3 class="text-xl font-bold text-pink-600">Hai Raisya...</h3>
+                        <p class="text-gray-700">Maaf ya aku udah bikin kamu kesel.</p>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div x-show="currentSlide === 1" class="text-center space-y-4">
+                        <div class="text-6xl mx-auto floating">😔</div>
+                        <h3 class="text-xl font-bold text-pink-600">Aku Menyesal</h3>
+                        <p class="text-gray-700">Aku nyesek banget kalo sikapku bikin tidak nyaman.</p>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div x-show="currentSlide === 2" class="text-center space-y-4">
+                        <div class="text-6xl mx-auto floating">💝</div>
+                        <h3 class="text-xl font-bold text-pink-600">Maafin Aku Ya</h3>
+                        <p class="text-gray-700">Sumpah aku minta maaf sebesar-besarnya 🙏🙏🙏. Dari mulai perkataan ku yang mungkin bikin kamu kesel, sakit hati aku minta maaf.</p>
+                    </div>
+
+                    <!-- Slide 5 -->
+                    <div x-show="currentSlide === 3" class="text-center space-y-4">
+                        <div class="text-6xl mx-auto heart">💖</div>
+                        <h3 class="text-xl font-bold text-pink-600">Terima Kasih</h3>
+                        <p class="text-gray-700">Terima kasih sudah mau membaca surat ini ❤️❤️❤️.</p>
+                        <p class="font-medium text-red-500 mt-2">Dari Anggara yang masih berharap</p>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between mt-6">
+                        <button @click="currentSlide = Math.max(0, currentSlide - 1)" x-show="currentSlide > 0" class="px-4 py-2 bg-pink-100 text-pink-600 rounded-lg hover:bg-pink-200 transition">Sebelumnya</button>
+                        <div class="flex-grow"></div>
+                        <button @click="currentSlide = Math.min(4, currentSlide + 1)" x-show="currentSlide < 4" class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition">Selanjutnya</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Buttons -->
+        <div class="bg-pink-50 p-4 flex flex-col sm:flex-row gap-3 justify-center" x-data="{ showConfetti: false }">
+            <button
+                    @click="openWhatsApp()"
+                    class="px-5 py-2 bg-white border-2 border-pink-400 text-pink-500 rounded-full shadow hover:shadow-lg transition flex items-center justify-center gap-2">
+                <span>Kirim Pesan</span> <span class="text-xl">📱</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-10 text-center text-gray-500 text-sm relative z-10">
+        <p>Dibuat dengan ❤️ khusus untuk Raisya</p>
+        <p class="mt-1">&copy; 2025 Anggara Saputra</p>
+    </div>
+</div>
+
+<!-- Confetti JS -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    function app() {
+        return {
+            fallingHearts: [],
+            init() {
+                // Create falling hearts
+                for (let i = 0; i < 20; i++) {
+                    this.fallingHearts.push({
+                        id: i,
+                        x: Math.random() * 100,
+                        size: Math.random() * 20 + 15,
+                        duration: Math.random() * 10 + 10
+                    });
+                }
+            },
+            confetti() {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#FD6584', '#FC8DAB', '#FDA4BD']
+                });
+            },
+            openWhatsApp() {
+                this.confetti();
+                setTimeout(() => {
+                    window.open('https://wa.me/6285861235561', '_blank');
+                }, 1000); // Buka WhatsApp setelah 1 detik (setelah confetti muncul)
+            }
+        }
+    }
+</script>
+</body>
+</html>
